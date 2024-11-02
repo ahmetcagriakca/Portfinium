@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Portfolio Summary</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-5">Asset Portfolio Summary</h1>
+      <div class="table-responsive mt-3">
+        {{ table_html | safe }}
+      </div>
+      <a href="/add_asset" class="btn btn-primary mt-3">Add More Assets</a>
+    </div>
+  </body>
+</html>

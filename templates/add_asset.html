@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>Add Asset</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-5">Add New Asset</h1>
+      <form method="post" class="mt-3">
+        <div class="form-group">
+          <label for="asset">Asset Code</label>
+          <input type="text" class="form-control" id="asset" name="asset" required>
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input type="number" step="any" class="form-control" id="quantity" name="quantity" required>
+        </div>
+        <div class="form-group">
+          <label for="date">Purchase Date</label>
+          <input type="text" class="form-control" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="number" step="any" class="form-control" id="price" name="price" readonly>
+        </div>
+        <button type="button" class="btn btn-info" onclick="getPrice()">Get Price</button>
+        <p class="mt-2" id="price-info"></p>
+        <button type="submit" class="btn btn-primary mt-2">Add Asset</button>
+      </form>
+      <p class="mt-3">{{ message }}</p>
+      <a href="/calculate_portfolio" class="btn btn-secondary mt-3">View Portfolio</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      $(function() {
+        $("#date").datepicker({ dateFormat: 'dd-mm-yy' });
+      });
+
+      function getPrice() {
+        const asset = document.getElementById('asset').value;
+        const date = document.getElementById('date').value;
+        if (asset && date) {
+          fetch(`/get_price?asset=${asset}&date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+              document.getElementById('price-info').innerText = data.message;
+              if (data.price) {
+                document.getElementById('price').value = data.price;
+              }
+            });
+        } else {
+          document.getElementById('price-info').innerText = 'Please enter asset and date.';
+        }
+      }
+    </script>
+  </body>
+</html>
